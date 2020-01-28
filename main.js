@@ -23,6 +23,7 @@ let stacks = {
 };
 
 // Start here. What is this function doing?
+// This function enables us to see what numbers are on what stack.
 const printStacks = () => {
   console.log("a: " + stacks.a);
   console.log("b: " + stacks.b);
@@ -30,26 +31,48 @@ const printStacks = () => {
 }
 
 // Next, what do you think this function should do?
-const movePiece = () => {
+// This function should move the piece, from stack to stack.
+const movePiece = (from, to) => {
   // Your code here
+  const piece = stacks[from].pop();
+  stacks[to].push(piece);
 
 }
 
 // Before you move, should you check if the move it actually allowed? Should 3 be able to be stacked on 2
-const isLegal = () => {
+// To check if your move is valid. Larger can't be stacked on smaller. 3 cannot be stacked on 2.
+const isLegal = (from, to) => {
   // Your code here
+  let stackFrom = stacks[from];
+  let stackTo = stacks[to];
+
+  if (stackFrom[from.length - 1] > stackTo[to.length - 1]){
+      return false;
+  } else
+      return true;
+    
 
 }
 
 // What is a win in Towers of Hanoi? When should this function run?
+// A win is when all the towers are arranged from smallest to largest (top down). We can run this function after every move.
+// Or we can run this after a certain number of moves
 const checkForWin = () => {
   // Your code here
+
+  if (stacks['b'].length == 4) {
+    return true;
+  } else {
+    return false;
+  }
 
 }
 
 // When is this function called? What should it do with its argument?
+// This function is called when you're moving pieces from stack to stack. 
 const towersOfHanoi = (startStack, endStack) => {
   // Your code here
+  movePiece(startStack, endStack)
 
 }
 
