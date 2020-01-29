@@ -45,12 +45,21 @@ const isLegal = (from, to) => {
   // Your code here
   let stackFrom = stacks[from];
   let stackTo = stacks[to];
+  // try {
 
-  if (stackFrom[from.length - 1] > stackTo[to.length - 1]){
+  if (stackFrom[from.length - 1] > stackTo[to.length - 1]) {
+      // throw "Not allowed!";
       return false;
-  } else
+  } else {
       return true;
-    
+    }
+// }   catch(err) {
+//   console.error(err);
+//   event.preventDefault();
+// }
+// finally {
+//   return (stackFrom, stackTo);
+// }
 
 }
 
@@ -72,8 +81,15 @@ const checkForWin = () => {
 // This function is called when you're moving pieces from stack to stack. 
 const towersOfHanoi = (startStack, endStack) => {
   // Your code here
-  movePiece(startStack, endStack)
-
+  
+  if (isLegal(startStack, endStack)) {
+    movePiece(startStack, endStack);
+    if (checkForWin()) {
+      console.log('You won! Great work!')
+    }
+  } else {
+    console.log('Not allowed! Larger piece cannot be moved on top of smaller piece');
+  }
 }
 
 const getPrompt = () => {
