@@ -34,7 +34,7 @@ const printStacks = () => {
 // This function should move the piece, from stack to stack.
 const movePiece = (from, to) => {
   // Your code here
-  let piece = stacks[from].pop();
+  const piece = stacks[from].pop();
   stacks[to].push(piece);
 
 }
@@ -47,7 +47,7 @@ const isLegal = (from, to) => {
   let stackTo = stacks[to];
   // try {
 
-  if (stackFrom[from.length - 1] < stackTo[to.length - 1] || stackTo.length === 0) {
+  if (stackFrom[stackFrom.length - 1] < stackTo[stackTo.length - 1] || stackTo.length === 0) {
       // throw "Not allowed!";
       return true;
   } else {
@@ -83,11 +83,12 @@ const towersOfHanoi = (startStack, endStack) => {
   // Your code here
   
   if (isLegal(startStack, endStack)) {
-    movePiece(startStack, endStack);
+      movePiece(startStack, endStack);
    if (checkForWin()) {
       console.log('You won! Great work!')
    }
-  } else {
+  } 
+  else {
     console.log('Not allowed! Larger piece cannot be moved on top of smaller piece');
   }
 }
@@ -129,6 +130,14 @@ if (typeof describe === 'function') {
         c: []
       };
       assert.equal(isLegal('a', 'c'), true);
+    });
+    it('should allow a legal move', () => {   //Test added by me (Hassan R)
+      stacks = {
+        a: [4],
+        b: [3, 1],
+        c: [2]
+      };
+      assert.equal(isLegal('b', 'c'), true);
     });
   });
   describe('#checkForWin()', () => {
