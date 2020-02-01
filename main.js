@@ -41,6 +41,7 @@ const movePiece = (from, to) => {
 
 // Before you move, should you check if the move it actually allowed? Should 3 be able to be stacked on 2
 // To check if your move is valid. Larger can't be stacked on smaller. 3 cannot be stacked on 2.
+// And to also be able to move a piece onto an empty stack.
 const isLegal = (from, to) => {
   // Your code here
   let stackFrom = stacks[from];
@@ -65,11 +66,12 @@ const isLegal = (from, to) => {
 
 // What is a win in Towers of Hanoi? When should this function run?
 // A win is when all the towers are arranged from smallest to largest (top down). We can run this function after every move.
-// Or we can run this after a certain number of moves
+// In the case of running it in a terminal, a win would be arranged from left to right, largest to smallest. (Ex: 4,3,2,1)
+// Stack 'a' cannot be a win. Must be 'b' or 'c'.
 const checkForWin = () => {
   // Your code here
 
-  if (stacks['b'].length == 4) {
+  if (stacks['a'].length == 0 && (stacks['b'].length == 4 || stacks['c'].length == 4)) {
     return true;
   } else {
     return false;
@@ -78,7 +80,8 @@ const checkForWin = () => {
 }
 
 // When is this function called? What should it do with its argument?
-// This function is called when you're moving pieces from stack to stack. 
+// This function is called when you're moving pieces from stack to stack.
+// We can run our other functions through this main function, since it's getting called in the 'getPrompt' function.
 const towersOfHanoi = (startStack, endStack) => {
   // Your code here
   
@@ -111,6 +114,10 @@ if (typeof describe === 'function') {
     it('should be able to move a block', () => {
       towersOfHanoi('a', 'b');
       assert.deepEqual(stacks, { a: [4, 3, 2], b: [1], c: [] });
+    });
+    it('should be able to move a block', () => {    //Test added by me (Hassan R)
+    towersOfHanoi('b', 'c');
+      assert.deepEqual(stacks, { a: [4, 3, 2], b: [], c: [1] });
     });
   });
 
@@ -146,6 +153,10 @@ if (typeof describe === 'function') {
       assert.equal(checkForWin(), true);
       stacks = { a: [1], b: [4, 3, 2], c: [] };
       assert.equal(checkForWin(), false);
+    });
+    it('should detect a win', () => {
+      stacks = { a: [], b: [], c: [4, 3, 2, 1] };  //Test added by me (Hassan R)
+      assert.equal(checkForWin(), true);
     });
   });
 
